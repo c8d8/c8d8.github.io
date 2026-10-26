@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cre8ive Dedic8ion — 不動産PRクリエイター はち</title>
+<meta name="description" content="まだ無い景色を、見せる。売り土地に建った姿を、古い家にリフォーム後の暮らしを。AIとCGでつくる不動産PR動画。">
+<link rel="icon" href="media/mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141210;--paper:#EFEAE1;--gold:#B8873B;--mute:#7A7166;--rule:rgba(20,18,16,.18)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:"Zen Kaku Gothic New",sans-serif;font-size:15px;line-height:1.9;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.pad{padding-left:clamp(20px,5vw,72px);padding-right:clamp(20px,5vw,72px)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* HERO */
+.hero{position:relative;height:100svh;min-height:620px;color:#F2EEE6;overflow:hidden;background:#0c0b0a}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.6}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,11,10,.55) 0%,rgba(12,11,10,0) 30%,rgba(12,11,10,0) 50%,rgba(12,11,10,.88) 100%)}
+.nav{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;justify-content:space-between;align-items:center;padding-top:22px}
+.nav img{height:34px}
+.nav a{font-family:"Syne",sans-serif;font-size:12px;letter-spacing:.24em;border-bottom:1px solid rgba(242,238,230,.6);padding-bottom:2px}
+.hero .in{position:absolute;left:0;right:0;bottom:0;z-index:3;padding-bottom:clamp(28px,6vh,64px)}
+.kicker{font-family:"Syne",sans-serif;font-size:11px;letter-spacing:.42em;color:#D9CDB8}
+.hero h1{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:clamp(40px,8.6vw,120px);line-height:1.1;letter-spacing:.02em;margin:14px 0 26px}
+.hero h1 span{display:block}
+.hero h1 .sm{font-size:.38em;font-weight:500;letter-spacing:.14em;margin-bottom:.4em;color:#D9CDB8}
+.meta{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;border-top:1px solid rgba(242,238,230,.3);padding-top:18px}
+.meta p{max-width:520px;font-size:14px;color:#E4DCCF}
+.meta .who{text-align:right;margin-left:auto}
+.meta .who b{font-family:"Shippori Mincho B1",serif;font-size:34px;font-weight:700;letter-spacing:.24em;display:block;line-height:1.1}
+.meta .who small{font-size:11px;letter-spacing:.3em;color:#D9CDB8}
+
+/* MARQUEE */
+.marq{background:var(--ink);color:var(--paper);overflow:hidden;white-space:nowrap;padding:16px 0}
+.marq div{display:inline-block;animation:mq 38s linear infinite}
+.marq span{font-family:"Syne",sans-serif;font-weight:700;font-size:clamp(18px,3vw,30px);letter-spacing:.04em;margin-right:42px}
+.marq i{font-style:normal;color:var(--gold);margin-left:42px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* STATEMENT */
+.state{padding-top:110px;padding-bottom:100px}
+.big{font-family:"Shippori Mincho B1",serif;font-weight:700;font-size:clamp(24px,4.4vw,50px);line-height:1.65;letter-spacing:.04em;max-width:1000px;margin-bottom:64px}
+.big u{text-decoration:none;background:linear-gradient(transparent 62%,rgba(184,135,59,.35) 62%)}
+.trio{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));border-top:1px solid var(--rule)}
+.trio div{padding:26px 0;border-bottom:1px solid var(--rule)}
+.trio small{font-family:"Syne",sans-serif;font-size:11px;letter-spacing:.3em;color:var(--gold)}
+.trio b{display:block;font-size:17px;margin:6px 0}
+.trio p{font-size:14px;color:var(--mute)}
+@media(min-width:800px){.trio div{border-bottom:0;border-right:1px solid var(--rule);padding:26px}.trio div:first-child{padding-left:0}.trio div:last-child{border-right:0}}
+
+/* SECTION HEAD */
+.sh{display:grid;gap:12px;padding-top:110px;padding-bottom:44px;border-bottom:1px solid var(--rule)}
+.sh .no{font-family:"Syne",sans-serif;font-size:12px;letter-spacing:.3em;color:var(--mute)}
+.sh h2{font-family:"Syne",sans-serif;font-weight:800;font-size:clamp(56px,11vw,132px);line-height:.92;letter-spacing:-.03em}
+.sh h2 em{font-style:normal;color:var(--gold)}
+.sh p{max-width:480px;color:var(--mute)}
+@media(min-width:900px){.sh{grid-template-columns:1.2fr 1fr;align-items:end}.sh .no{grid-column:1/-1}}
+
+/* WORKS */
+.proj{display:grid;gap:22px;padding-top:56px;padding-bottom:56px;border-bottom:1px solid var(--rule)}
+@media(min-width:900px){.proj{grid-template-columns:1.55fr 1fr;gap:56px;align-items:center}.proj.rev{grid-template-columns:1fr 1.55fr}.proj.rev .media{order:2}}
+.media{position:relative;overflow:hidden;background:#0c0b0a;cursor:pointer}
+.media.w{aspect-ratio:16/9}
+.media.t{aspect-ratio:9/16}
+.media img,.media video,.media iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.media:hover img{transform:scale(1.04)}
+.media:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55));pointer-events:none}
+.pl{position:absolute;left:16px;bottom:14px;z-index:2;font-family:"Syne",sans-serif;font-size:11px;letter-spacing:.28em;color:#F2EEE6;display:flex;align-items:center;gap:10px}
+.pl b{width:36px;height:36px;border-radius:50%;border:1px solid rgba(242,238,230,.85);position:relative;display:inline-block}
+.pl b:after{content:"";position:absolute;left:14px;top:11px;border-left:10px solid #F2EEE6;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.idx{font-family:"Syne",sans-serif;font-weight:800;font-size:68px;line-height:1;color:transparent;-webkit-text-stroke:1px var(--ink)}
+.cat{font-family:"Syne",sans-serif;font-size:11px;letter-spacing:.3em;color:var(--gold);margin:16px 0 8px}
+.info h3{font-family:"Shippori Mincho B1",serif;font-weight:700;font-size:clamp(23px,3vw,34px);line-height:1.45;letter-spacing:.03em}
+.info p{color:var(--mute);margin-top:12px;font-size:14px}
+.info dl{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;margin-top:18px;font-size:12px;border-top:1px solid var(--rule);padding-top:14px}
+.info dt{font-family:"Syne",sans-serif;letter-spacing:.2em;color:var(--mute)}
+.rail-h{display:flex;justify-content:space-between;align-items:end;gap:12px;padding-top:80px;padding-bottom:22px}
+.rail-h h3{font-family:"Syne",sans-serif;font-weight:800;font-size:clamp(34px,6vw,64px);letter-spacing:-.02em;line-height:1}
+.rail-h h3 em{font-style:normal;color:var(--gold)}
+.rail-h span{font-size:12px;color:var(--mute)}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:min(64vw,250px);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:26px}
+.rail::-webkit-scrollbar{height:3px}.rail::-webkit-scrollbar-thumb{background:var(--ink)}
+.rail article{scroll-snap-align:start}
+.rail h4{font-size:14px;margin-top:12px;line-height:1.5}
+.rail p{font-size:12px;color:var(--mute)}
+.note{font-size:11px;color:var(--mute);padding-top:14px;padding-bottom:30px}
+
+/* PROCESS */
+.dark{background:var(--ink);color:var(--paper)}
+.dark .sh{border-color:rgba(239,234,225,.15)}
+.dark .sh p,.dark .sh .no{color:#A49A8D}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));padding-bottom:96px}
+.steps div{padding:34px 0 36px;border-bottom:1px solid rgba(239,234,225,.15)}
+.steps .n{font-family:"Syne",sans-serif;font-weight:800;font-size:46px;color:var(--gold);line-height:1}
+.steps b{display:block;font-size:17px;margin:18px 0 6px}
+.steps p{font-size:13px;color:#B9AFA2}
+@media(min-width:900px){.steps div{border-bottom:0;border-left:1px solid rgba(239,234,225,.15);padding:34px 26px 36px}}
+
+/* ABOUT */
+.about{display:grid;gap:36px;padding-top:100px;padding-bottom:110px}
+@media(min-width:900px){.about{grid-template-columns:1fr 1.2fr;align-items:end}}
+.about .name{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:clamp(96px,18vw,220px);line-height:.9}
+.about .name small{display:block;font-family:"Syne",sans-serif;font-weight:500;font-size:12px;letter-spacing:.3em;color:var(--mute);margin-top:18px}
+.about .q{font-family:"Shippori Mincho B1",serif;font-size:clamp(20px,2.6vw,26px);line-height:1.7;margin-bottom:22px}
+.about p{margin-bottom:14px}
+
+/* CONTACT */
+.contact{padding-top:96px;padding-bottom:70px;border-top:1px solid var(--rule)}
+.contact .no{font-family:"Syne",sans-serif;font-size:12px;letter-spacing:.3em;color:var(--mute)}
+.contact a.big2{display:inline-flex;align-items:center;gap:.25em;font-family:"Syne",sans-serif;font-weight:800;font-size:clamp(50px,11vw,150px);line-height:1;letter-spacing:-.03em;margin:18px 0 22px;position:relative}
+.contact a.big2:after{content:"";position:absolute;left:0;bottom:-8px;height:3px;width:100%;background:var(--ink);transform-origin:left;transform:scaleX(.2);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.contact a.big2:hover:after{transform:scaleX(1)}
+.contact a.big2 i{font-style:normal;color:var(--gold)}
+.contact p{color:var(--mute);max-width:520px}
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:24px;padding-bottom:28px;font-family:"Syne",sans-serif;font-size:11px;letter-spacing:.2em;color:var(--mute);border-top:1px solid var(--rule)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <video src="media/hero.mp4" autoplay muted loop playsinline poster="media/hero.jpg"></video>
+  <div class="nav pad">
+    <img src="media/logo_light.png" alt="Cre8ive Dedic8ion">
+    <a href="#contact">CONTACT</a>
+  </div>
+  <div class="in pad">
+    <div class="kicker">REAL ESTATE PR FILMS</div>
+    <h1><span class="sm">物件の魅力を、動画で。</span><span>まだ無い景色を、</span><span>見せる。</span></h1>
+    <div class="meta">
+      <p>売り土地には、建った姿を。古い家には、リフォーム後の暮らしを。<br>撮影なし。写真と図面から、AIとCGで物件紹介動画をつくります。</p>
+      <div class="who"><small>不動産PRクリエイター</small><b>はち</b></div>
+    </div>
+  </div>
+</header>
+
+<div class="marq"><div>
+  <span>LAND</span><span>RENOVATION<i>✦</i></span><span>ROOM TOUR<i>✦</i></span><span>BRAND FILM<i>✦</i></span><span>SNS SHORTS<i>✦</i></span><span>LAND<i>✦</i></span>
+  <span>LAND</span><span>RENOVATION<i>✦</i></span><span>ROOM TOUR<i>✦</i></span><span>BRAND FILM<i>✦</i></span><span>SNS SHORTS<i>✦</i></span><span>LAND<i>✦</i></span>
+</div></div>
+
+<section class="state pad">
+  <p class="big">写真だけでは伝わらない物件ほど、動画の出番です。<br><u>更地の未来</u>も、<u>古い家の第二章</u>も。<br>まだ誰も見ていない景色を、先に見せる。</p>
+  <div class="trio">
+    <div><small>01 — LAND</small><b>売り土地・古家付き土地</b><p>現況の写真から、家が建つまでを。住宅・店舗など、使い道ごとのイメージもCGで。</p></div>
+    <div><small>02 — RENOVATION</small><b>中古戸建て・マンション</b><p>リフォーム前と後を、同じ角度で切り替え。壁紙や外壁の色違い、暮らしの場面まで。</p></div>
+    <div><small>03 — BRAND</small><b>会社のCM・SNSショート</b><p>相談のきっかけをつくる、思わず最後まで見てしまうCM。縦型のショートにも。</p></div>
+  </div>
+</section>
+
+<section id="works">
+  <div class="sh pad">
+    <div class="no">( SELECTED WORKS )</div>
+    <h2>Works<em>.</em></h2>
+    <p>実際の物件でつくった事例と、架空の物件でつくった見本です。</p>
+  </div>
+
+  <div class="proj pad">
+    <div class="media w" data-video="media/konan.mp4"><img src="media/konan_poster.jpg" alt="江南市の売り土地" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+    <div class="info">
+      <div class="idx">01</div>
+      <div class="cat">LAND — 実物件</div>
+      <h3>更地に、建った姿を。</h3>
+      <p>愛知県江南市の売り土地。現況の写真から、2区画それぞれに家が建つまでをCGで。駅までの距離や、資材置き場・店舗としての使い道も。</p>
+      <dl><dt>AREA</dt><dd>愛知県江南市</dd><dt>TIME</dt><dd>59秒・横型</dd></dl>
+    </div>
+  </div>
+
+  <div class="proj rev pad">
+    <div class="media w" data-video="media/meichi.mp4"><img src="media/meichi.jpg" alt="一宮市の売り戸建て" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+    <div class="info">
+      <div class="idx">02</div>
+      <div class="cat">RENOVATION — 実物件</div>
+      <h3>古い家の、第二章を。</h3>
+      <p>愛知県一宮市の売り戸建て。家財を消したLDK、外壁と壁紙の色違い、家族が暮らすイメージまでをナレーション付きで。</p>
+      <dl><dt>AREA</dt><dd>愛知県一宮市</dd><dt>TIME</dt><dd>55秒・横型</dd></dl>
+    </div>
+  </div>
+
+  <div class="proj pad">
+    <div class="media w" data-yt="gl_m-LkQjGg"><img src="https://i.ytimg.com/vi/gl_m-LkQjGg/hqdefault.jpg" alt="新築戸建て" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+    <div class="info">
+      <div class="idx">03</div>
+      <div class="cat">NEW HOUSE — 見本</div>
+      <h3>新築戸建ての、物件紹介。</h3>
+      <p>外観・間取り・暮らしの場面を、物件の魅力が伝わる順番で。</p>
+    </div>
+  </div>
+
+  <div class="proj rev pad">
+    <div class="media w" data-yt="DIGcyqiwoi0"><img src="https://i.ytimg.com/vi/DIGcyqiwoi0/hqdefault.jpg" alt="新築マンション" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+    <div class="info">
+      <div class="idx">04</div>
+      <div class="cat">CONDOMINIUM — 見本</div>
+      <h3>新築マンションの、物件紹介。</h3>
+      <p>建物の存在感と、部屋からの暮らしのイメージを1本に。</p>
+    </div>
+  </div>
+
+  <div class="rail-h pad"><h3>Shorts<em>.</em></h3><span>SNS・店頭モニター向けの縦型 →</span></div>
+  <div class="rail pad">
+    <article><div class="media t" data-yt="GEwckRnYX5U"><img src="https://i.ytimg.com/vi/GEwckRnYX5U/hqdefault.jpg" alt="古家付き土地" loading="lazy"><span class="pl"><b></b>PLAY</span></div><h4>古い家が、30秒で新築に</h4><p>古家付き土地|見本</p></article>
+    <article><div class="media t" data-video="media/torishirabe.mp4"><img src="media/torishirabe.jpg" alt="空き家相談のCM" loading="lazy"><span class="pl"><b></b>PLAY</span></div><h4>空き家相談のCM「取調室の自白」</h4><p>会社のCM|見本</p></article>
+    <article><div class="media t" data-yt="PnL8Dy8w5C8"><img src="https://i.ytimg.com/vi/PnL8Dy8w5C8/hqdefault.jpg" alt="中古マンションのルームツアー" loading="lazy"><span class="pl"><b></b>PLAY</span></div><h4>36秒のルームツアー</h4><p>中古マンション|見本</p></article>
+    <article><div class="media t" data-yt="QKzRPPq8MH0"><img src="https://i.ytimg.com/vi/QKzRPPq8MH0/hqdefault.jpg" alt="古家付き土地の動画の説明" loading="lazy"><span class="pl"><b></b>PLAY</span></div><h4>古家付き土地の動画、こう作ります</h4><p>不動産会社さま向けのご説明|80秒</p></article>
+  </div>
+  <p class="note pad">※「実物件」は実際の物件の制作事例です(価格・情報は制作時点のもの)。「見本」は架空の物件・会社で作ったサンプルです。CG・AIによるイメージを含みます。</p>
+</section>
+
+<section class="dark">
+  <div class="sh pad">
+    <div class="no">( HOW IT WORKS )</div>
+    <h2>Process<em>.</em></h2>
+    <p>撮影はいりません。お手元の写真と図面から始められます。</p>
+  </div>
+  <div class="steps pad">
+    <div><span class="n">01</span><b>ご相談</b><p>物件の写真・図面と、伝えたいことをお聞きします。お見積りは無料です。</p></div>
+    <div><span class="n">02</span><b>構成のご確認</b><p>CGを作る前に、配置図や動画の流れを確認していただきます。</p></div>
+    <div><span class="n">03</span><b>制作</b><p>お預かりした写真と資料だけで、映像をつくります。</p></div>
+    <div><span class="n">04</span><b>修正・納品</b><p>修正は2回まで無料。SNS・YouTube・店頭モニター向けに書き出します。</p></div>
+  </div>
+</section>
+
+<section class="about pad">
+  <div class="name">はち<small>REAL ESTATE PR CREATOR</small></div>
+  <div>
+    <p class="q">「どう見せれば、<br>この物件は決まるのか。」<br>不動産の現場で、ずっと考えてきました。</p>
+    <p>元・不動産のサブリース営業。物件の弱みも強みも見てきた経験をもとに、AIとCGで物件の魅力を伝える映像をつくっています。</p>
+    <p>写真だけだと伝わらない——そんな物件こそ、お気軽にご相談ください。</p>
+    <p style="font-size:12px;color:var(--mute);margin-top:22px">山田 大貴 / Hiroki Yamada — Cre8ive Dedic8ion ・ 株式会社ワイズ</p>
+  </div>
+</section>
+
+<section class="contact pad" id="contact">
+  <div class="no">( CONTACT )</div><br>
+  <a class="big2" href="https://forms.gle/aHXsU9NMDf1D1KQB9" target="_blank" rel="noopener">Let's talk<i>→</i></a>
+  <p>「この物件なら、どう見せる？」というご質問だけでも大歓迎です。フォームからお気軽にどうぞ。</p>
+</section>
+
+<footer class="pad"><span>© CRE8IVE DEDIC8ION</span><span>株式会社ワイズ</span></footer>
+
+<script>
+document.querySelectorAll('.media').forEach(function(m){
+  m.addEventListener('click',function(){
+    if(m.dataset.loaded) return; m.dataset.loaded=1;
+    var el;
+    if(m.dataset.yt){
+      el=document.createElement('iframe');
+      el.src='https://www.youtube-nocookie.com/embed/'+m.dataset.yt+'?autoplay=1&rel=0&playsinline=1';
+      el.allow='autoplay; encrypted-media; picture-in-picture'; el.allowFullscreen=true;
+    }else{
+      el=document.createElement('video');
+      el.src=m.dataset.video; el.controls=true; el.autoplay=true; el.playsInline=true;
+    }
+    m.innerHTML=''; m.appendChild(el);
+  });
+});
+</script>
+</body>
+</html>
