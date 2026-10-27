@@ -51,6 +51,24 @@
   .emptybox{background:rgba(26,13,8,.86);border:3px solid #8a7a6a;border-radius:14px;padding:12px 22px;max-width:min(560px,100%);box-sizing:border-box}
   .emptybox h3{margin:0;font-weight:normal;font-size:clamp(26px,8vw,44px);color:#d8cfc4}
   .emptybox .msg{font-family:"Hiragino Sans",sans-serif;font-weight:700;font-size:clamp(13px,3.6vw,18px);margin-top:4px;color:var(--gold)}
+  .best{font-family:"Hiragino Sans",sans-serif;font-weight:700;font-size:clamp(13px,3.6vw,18px);color:var(--gold)}
+  .link{font:inherit;font-size:clamp(14px,3.8vw,20px);background:none;border:0;color:var(--cream);text-decoration:underline;text-underline-offset:4px;cursor:pointer;padding:6px 10px}
+  .link:focus-visible{outline:3px solid var(--cream);outline-offset:2px}
+  .newt{font-family:"Hiragino Sans",sans-serif;font-weight:700;font-size:clamp(13px,3.6vw,18px);color:var(--gold);text-shadow:0 2px 0 #000;margin-top:6px;line-height:1.5}
+  .newt:empty{display:none}
+  #titles{justify-content:flex-start;background:rgba(26,13,8,.94);overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch}
+  #titles .btn{flex:none;margin-top:0}
+  .tl{flex:none}
+  .tl-head{font-size:clamp(24px,7vw,38px);color:var(--gold)}
+  .tl-head span{font-size:.6em;color:var(--cream)}
+  .tl-best{font-family:"Hiragino Sans",sans-serif;font-weight:700;font-size:clamp(13px,3.6vw,17px);color:#e4d6c4}
+  .tl{list-style:none;margin:0;padding:0;width:min(520px,100%);display:grid;gap:8px}
+  .tl li{display:flex;align-items:center;gap:12px;text-align:left;background:#2e1a0e;border:2px solid #5a3a20;border-radius:12px;padding:8px 12px}
+  .tl li.on{border-color:var(--gold);background:#3e2410}
+  .tl .ic{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#5a3a20;color:#a08a74;font-size:18px}
+  .tl li.on .ic{background:var(--gold);color:#2a1000}
+  .tl b{display:block;font-weight:normal;font-size:clamp(15px,4.2vw,20px)}
+  .tl small{display:block;font-family:"Hiragino Sans",sans-serif;font-weight:700;font-size:clamp(11px,3.2vw,14px);color:#c4a98f}
   .btn.sub{animation:none;background:#7a4a2a;color:var(--cream);box-shadow:0 8px 0 #3a1a08;font-size:clamp(20px,5.5vw,32px)}
 </style>
 </head>
@@ -60,9 +78,11 @@
 <div class="screen shade on" id="title">
   <div class="kicker">Tooosu ハロウィン限定</div>
   <div class="logo"><small>カウンターの奥で止めろ</small>ジョッキ<br>すべらせ</div>
-  <div class="lead">ジョッキを指で上にシュッとはじいて、<br>金のラインにぴったり止めろ!!<br>3回投げたら宝箱。空っぽなら何度でも挑戦OK</div>
+  <div class="lead">ジョッキを指で上にシュッとはじいて、<br>金のラインにぴったり止めろ!!<br>ぴったり連続でコンボ!! 3連続で伝説の宝箱</div>
   <button class="btn" id="startBtn">スタート</button>
   <div class="badge">うまいほど いい宝箱が出やすい!!</div>
+  <div class="best" id="bestLine"></div>
+  <button class="link" id="titlesBtn">称号コレクションを見る</button>
 </div>
 
 <div class="screen" id="result">
@@ -74,9 +94,11 @@
       <div class="again" id="cpAgain" hidden>※今日の宝箱は開封ずみ。もう一度表示しています</div>
     </div>
     <div class="show">この画面を店員さんに見せてね</div>
+    <div class="newt" id="newWin"></div>
   </div>
   <div class="bottom">
     <button class="btn sub" id="againBtn">もう一回あそぶ</button>
+    <button class="link" id="titlesBtn2">称号コレクション</button>
   </div>
 </div>
 
@@ -84,10 +106,19 @@
   <div class="emptybox">
     <h3>宝箱は空っぽ…</h3>
     <div class="msg" id="loseMsg"></div>
+    <div class="newt" id="newLose"></div>
   </div>
   <div class="bottom">
     <button class="btn" id="retryBtn">もう一回挑戦!!</button>
+    <button class="link" id="titlesBtn3">称号コレクション</button>
   </div>
+</div>
+
+<div class="screen shade" id="titles">
+  <div class="tl-head">称号コレクション <span id="tlCount"></span></div>
+  <div class="tl-best" id="tlBest"></div>
+  <button class="btn sub" id="tlClose">もどる</button>
+  <ul class="tl" id="tlList"></ul>
 </div>
 
 <script>
@@ -101,6 +132,8 @@ const CONFIG = {
     { name: '特典2', note: '' },   // 候補：ドリンク1杯無料
     { name: '特典3', note: '' },   // 候補：ショット（はずれ）
   ],
+  happenChance: 0.4,       // 1投ごとにハプニングが起きる確率
+  goldBonus: 50,           // 金のお化けに当てたときのボーナス点
   // 点数ごとの「空っぽの宝箱」の数（上から順に見て、最初に当てはまったもの）
   emptyChests: [
     { min: 160, empty: 0 },  // 160点以上：3つとも当たり
@@ -130,6 +163,36 @@ function loadToday(){
 }
 function saveToday(v){ try { localStorage.setItem(KEY, JSON.stringify(v)); } catch(e){} }
 
+/* ===== 称号と自己ベスト（このスマホの中だけで覚える） ===== */
+const TITLES = [
+  { id:'first',   name:'初ぴったり',         how:'ぴったりを出す' },
+  { id:'combo2',  name:'二連ぴったり',       how:'ぴったりを2連続で出す' },
+  { id:'legend',  name:'伝説の航海士',       how:'3投ともぴったりで止める' },
+  { id:'dodge',   name:'お化けよけ名人',     how:'1回の挑戦でお化けを2回ともよける' },
+  { id:'boo',     name:'お化けと友だち',     how:'お化けにぶつかる' },
+  { id:'crash',   name:'ジョッキ割り',       how:'カウンターの奥からジョッキを落とす' },
+  { id:'cat',     name:'黒猫にどつかれた',   how:'黒猫にぶつかる' },
+  { id:'gold',    name:'金のお化けハンター', how:'金のお化けに当てる' },
+  { id:'wind',    name:'追い風の達人',       how:'追い風のときにぴったりで止める' },
+  { id:'s300',    name:'300点の壁',          how:'1回の挑戦で300点以上とる' },
+  { id:'regular', name:'Tooosuの常連',       how:'10回挑戦する' },
+];
+const SKEY = 'tooosu-jug-stats';
+function loadStats(){
+  try { const v = JSON.parse(localStorage.getItem(SKEY) || 'null');
+    if (v && typeof v === 'object') return { best: v.best|0, plays: v.plays|0, titles: v.titles || {} }; } catch(e){}
+  return { best:0, plays:0, titles:{} };
+}
+let stats = loadStats(), newTitles = [], newBest = false;
+function saveStats(){ try { localStorage.setItem(SKEY, JSON.stringify(stats)); } catch(e){} }
+function unlock(id){
+  if (stats.titles[id]) return;
+  stats.titles[id] = Date.now(); saveStats();
+  const t = TITLES.find(t => t.id === id); newTitles.push(t.name);
+  pop(W/2, 96, `称号ゲット!! ${t.name}`, '#ffd23f', 24, 2.4);
+}
+function titleCount(){ return TITLES.filter(t => stats.titles[t.id]).length; }
+
 /* ===== 画面の準備 ===== */
 const cv = document.getElementById('c'), ctx = cv.getContext('2d');
 let W = 420, H = 760, scale = 1, dpr = 1;
@@ -149,7 +212,7 @@ function SX(x, s){ return W/2 + x * P(s); }                  // 横の位置 →
 addEventListener('resize', resize); resize();
 
 const $ = id => document.getElementById(id);
-function show(id){ ['title','result','lose'].forEach(s => $(s).classList.toggle('on', s===id)); }
+function show(id){ ['title','result','lose','titles'].forEach(s => $(s).classList.toggle('on', s===id)); }
 const endShown = () => $('result').classList.contains('on') || $('lose').classList.contains('on');
 const rand = (a,b) => a + Math.random()*(b-a);
 const FONT = s => `${s}px "Dela Gothic One","Hiragino Sans",sans-serif`;
@@ -158,8 +221,9 @@ const easeOut = x => 1 - Math.pow(1-x, 3);
 /* ===== 状態 ===== */
 let state = 'title', T = 0, last = performance.now(), hitstop = 0, shake = 0;
 let throwNo = 0, total = 0, phase = 'aim', phaseT = 0, results = [];
-const jug = { s:0, v:0, drop:0, slosh:0 };
+const jug = { s:0, v:0, drop:0, slosh:0, bonus:0 };
 let target = 700, wet = null, ghost = null, owner = null;
+let combo = 0, hap = null, cat = null, dodged = 0;   // コンボ・ハプニング・お化けをよけた回数
 let parts = [], texts = [], trail = [];
 
 function newThrow(){
@@ -167,15 +231,49 @@ function newThrow(){
   jug.s = 0; jug.v = 0; jug.drop = 0;
   target = rand(560, L - 60);
   wet = throwNo >= 2 ? (()=>{ const s = rand(160, target - 200); return { s, len: rand(80, 130) }; })() : null;
-  ghost = throwNo >= 2 ? { s: rand(260, target - 100), ph: Math.random()*6, sp: throwNo === 3 ? 2.6 : 1.8, hit:false } : null;
+  ghost = throwNo >= 2 ? { s: rand(260, target - 100), ph: Math.random()*6, sp: throwNo === 3 ? 2.6 : 1.8, hit:false, gold:false } : null;
+  jug.bonus = 0;
+  // ハプニング：追い風・黒猫・金のお化け（お化けがいる投げのときだけ）
+  hap = null; cat = null;
+  if (Math.random() < CONFIG.happenChance){
+    const opts = ['wind', 'cat']; if (ghost) opts.push('gold');
+    hap = opts[Math.floor(Math.random()*opts.length)];
+    if (hap === 'gold') ghost.gold = true;
+    if (hap === 'cat') cat = { s: rand(220, target - 80), x: rand(-HALF, HALF), dir: Math.random() < .5 ? -1 : 1, sp: rand(80, 120), hit:false, fly:0 };
+    pop(W/2, nearY - 260, 'ハプニング!!', '#ff8a1c', 44, 1.6);
+  }
 }
 function start(){
   throwNo = 0; total = 0; results = []; parts = []; texts = []; owner = null;
+  combo = 0; dodged = 0; newTitles = []; newBest = false;
   state = 'play'; show(null); newThrow();
 }
 $('startBtn').addEventListener('pointerdown', e => { e.stopPropagation(); start(); });
 $('againBtn').addEventListener('pointerdown', e => { e.stopPropagation(); start(); });
 $('retryBtn').addEventListener('pointerdown', e => { e.stopPropagation(); start(); });
+function refreshBest(){
+  $('bestLine').textContent = stats.plays ? `自己ベスト ${stats.best}点　称号 ${titleCount()}/${TITLES.length}` : '';
+}
+let titlesFrom = 'title';
+function openTitles(e){
+  e.stopPropagation();
+  titlesFrom = ['title','result','lose'].find(id => $(id).classList.contains('on')) || 'title';
+  $('tlCount').textContent = `${titleCount()}/${TITLES.length}`;
+  $('tlBest').textContent = `自己ベスト ${stats.best}点・挑戦 ${stats.plays}回`;
+  $('tlList').innerHTML = '';
+  for (const t of TITLES){
+    const on = !!stats.titles[t.id], li = document.createElement('li');
+    if (on) li.className = 'on';
+    li.innerHTML = `<span class="ic">${on ? '★' : '？'}</span><span><b></b><small></small></span>`;
+    li.querySelector('b').textContent = on ? t.name : '？？？';
+    li.querySelector('small').textContent = t.how;
+    $('tlList').appendChild(li);
+  }
+  show('titles');
+}
+['titlesBtn','titlesBtn2','titlesBtn3'].forEach(id => $(id).addEventListener('pointerdown', openTitles));
+$('tlClose').addEventListener('pointerdown', e => { e.stopPropagation(); refreshBest(); show(titlesFrom); });
+refreshBest();
 
 /* ===== 操作：上にシュッとはじく ===== */
 let samples = [], dragging = false;
@@ -215,13 +313,20 @@ function pop(x,y,str,col,size=40,life=1.2){ texts.push({x,y,str,col,size,life});
 function judge(){
   const d = Math.abs(jug.s - target), x = W/2, y = SY(jug.s) - 40*P(jug.s);
   let pts, word, col;
-  if (d <= 10){ pts = 100; word = 'ぴったり!!'; col = '#ffd23f'; hitstop = .18; shake = 10; burst(x, y, '#ffd23f', 40, 380); }
-  else if (d <= 30){ pts = 60; word = 'おしい!!'; col = '#ff8a1c'; burst(x, y, '#ff8a1c', 18, 240); }
+  if (d <= 10){
+    combo++; pts = 100 * combo; word = 'ぴったり!!'; col = '#ffd23f'; hitstop = .18; shake = 10 + combo*3; burst(x, y, '#ffd23f', 40*combo, 380);
+    if (combo >= 2) pop(W/2, nearY - 205, `${combo}連続!! ×${combo}`, '#ff8a1c', 46, 1.6);
+    unlock('first'); if (combo >= 2) unlock('combo2'); if (hap === 'wind') unlock('wind');
+    finishThrow(pts, word, col); return;
+  }
+  combo = 0;
+  if (d <= 30){ pts = 60; word = 'おしい!!'; col = '#ff8a1c'; burst(x, y, '#ff8a1c', 18, 240); }
   else if (d <= 70){ pts = 30; word = 'まあまあ'; col = '#fff6e6'; }
   else { pts = 10; word = jug.s < target ? 'とどかず…' : 'いきすぎ…'; col = '#b8c8ff'; }
   finishThrow(pts, word, col);
 }
 function finishThrow(pts, word, col){
+  pts += jug.bonus;
   total += pts; results.push(pts);
   pop(W/2, nearY - 150, word, col, 62, 1.4);
   pop(W/2, nearY - 95, `+${pts}`, col, 40, 1.4);
@@ -234,18 +339,49 @@ function update(dt){
   T += dt; phaseT += dt;
   if (state === 'play'){
     if (ghost) ghost.ph += dt*ghost.sp;
+    if (cat){
+      if (cat.hit) cat.fly += dt;
+      else {
+        cat.x += cat.dir * cat.sp * dt;
+        if (cat.x > HALF + 20){ cat.x = HALF + 20; cat.dir = -1; }
+        if (cat.x < -HALF - 20){ cat.x = -HALF - 20; cat.dir = 1; }
+      }
+    }
     if (phase === 'slide'){
       const onWet = wet && jug.s > wet.s && jug.s < wet.s + wet.len;
       const prev = jug.s;
-      jug.v = Math.max(0, jug.v - (onWet ? 70 : 330)*dt);
+      jug.v = Math.max(0, jug.v - (onWet ? 70 : (hap === 'wind' ? 230 : 330))*dt);
       jug.s += jug.v*dt;
       jug.slosh = Math.min(1, jug.v/900);
       // お化け：カウンターの真ん中にいるときに通ると止められる
-      if (ghost && !ghost.hit && prev < ghost.s && jug.s >= ghost.s && Math.abs(ghostX()) < 60){
-        ghost.hit = true; jug.v = Math.min(jug.v * 0.15, 110); hitstop = .16; shake = 12;  // 急ブレーキ：ほぼその場で止まる
+      if (ghost && !ghost.hit && prev < ghost.s && jug.s >= ghost.s){
         const gx = SX(ghostX(), ghost.s), gy = SY(ghost.s) - 70*P(ghost.s);
-        burst(gx, gy, '#e8e4ff', 16, 260);
-        pop(gx, gy - 40, 'ヒィッ!! 急ブレーキ!!', '#e6392b', 40);
+        if (Math.abs(ghostX()) < 60){
+          ghost.hit = true;
+          if (ghost.gold){
+            // 金のお化け：止められず、ボーナス点
+            jug.bonus += CONFIG.goldBonus; hitstop = .12; shake = 8;
+            burst(gx, gy, '#ffd23f', 34, 320);
+            pop(gx, gy - 40, `金のお化け!! +${CONFIG.goldBonus}`, '#ffd23f', 34);
+            unlock('gold');
+          } else {
+            jug.v = Math.min(jug.v * 0.15, 110); hitstop = .16; shake = 12;  // 急ブレーキ：ほぼその場で止まる
+            burst(gx, gy, '#e8e4ff', 16, 260);
+            pop(gx, gy - 40, 'ヒィッ!! 急ブレーキ!!', '#e6392b', 40);
+            unlock('boo');
+          }
+        } else if (!ghost.gold){
+          ghost.passed = true; dodged++;
+          if (dodged >= 2) unlock('dodge');
+        }
+      }
+      // 黒猫：当たるとどつかれて、ジョッキが加速する
+      if (cat && !cat.hit && prev < cat.s && jug.s >= cat.s && Math.abs(cat.x) < 45){
+        cat.hit = true; jug.v = jug.v * 1.35 + 120; hitstop = .1; shake = 8;
+        const cx = SX(cat.x, cat.s), cy = SY(cat.s) - 20*P(cat.s);
+        burst(cx, cy, '#2a2030', 16, 240);
+        pop(cx, cy - 40, 'ニャッ!! どつかれた!!', '#ffd23f', 36);
+        unlock('cat');
       }
       if (jug.s > L + 8){ phase = 'fall'; }
       else if (jug.v <= 0) judge();
@@ -255,6 +391,7 @@ function update(dt){
         const x = W/2, y = SY(L);
         burst(x, y, '#c9a46a', 30, 320); burst(x, y, '#fff6e6', 20, 260);
         shake = 16; hitstop = .12;
+        combo = 0; unlock('crash');
         finishThrow(0, 'ガシャーン!!', '#e6392b');
         jug.drop = 9999;
       }
@@ -276,16 +413,27 @@ function update(dt){
 
 /* ===== 店主と宝箱 ===== */
 function rankOf(s){
-  if (s >= 250) return 'Tooosuの伝説';
-  if (s >= 160) return 'カウンターの職人';
-  if (s >= 80)  return '見習いバーテン';
-  return 'ジョッキ割り';
+  if (s >= 450) return 'Tooosuの伝説';
+  if (s >= 250) return 'カウンターの職人';
+  if (s >= 120) return '見習いバーテン';
+  return '新入り水夫';
 }
 function startOwner(){
   state = 'owner';
   const saved = loadToday();
-  owner = { t:0, picked:false, pickT:0, lost:false, empty: emptyCount(total), repeat: saved,
+  const legend = combo >= CONFIG.throws;   // 全部ぴったり
+  owner = { t:0, picked:false, pickT:0, lost:false, legend, empty: legend ? 0 : emptyCount(total), repeat: saved,
     chests: [-118, 0, 118].map((x,i) => ({ x, s: L + 40, ts: 110, open:0, prize:null, chosen:false, delay: 0.9 + i*0.25 })) };
+  // 自己ベスト・称号
+  stats.plays++;
+  if (total > stats.best){ newBest = stats.best > 0; stats.best = total; }
+  saveStats();
+  if (legend) unlock('legend');
+  if (total >= 300) unlock('s300');
+  if (stats.plays >= 10) unlock('regular');
+  const note = (newBest ? `自己ベスト更新!! ${total}点` : `自己ベスト ${stats.best}点`) + (newTitles.length ? `<br>称号ゲット：${newTitles.join('・')}` : '');
+  $('newWin').innerHTML = note; $('newLose').innerHTML = note;
+  refreshBest();
   if (saved) fillCoupon(saved, true);
 }
 function updateOwner(dt){
@@ -311,7 +459,8 @@ function pickChest(x, y){
   // 空っぽの宝箱が e 個まざっている。選んだ箱が空っぽになる確率は e/3
   const e = o.empty;
   let k = -1;
-  if (Math.random() >= e / 3){
+  if (o.legend){ k = 0; }
+  else if (Math.random() >= e / 3){
     const w = prizeWeights(total), sum = w.reduce((a,b)=>a+b,0);
     let r = Math.random()*sum; k = 0; while (k < 2 && r > w[k]) { r -= w[k]; k++; }
   }
@@ -319,7 +468,7 @@ function pickChest(x, y){
   const otherPrizes = [0,1,2].filter(i => i !== k).sort(() => Math.random()-.5);
   const rest = [...Array(emptiesLeft).fill(-1), ...otherPrizes].slice(0, 2).sort(() => Math.random()-.5);
   c.chosen = true; c.prize = k;
-  o.chests.filter(d => d !== c).forEach((d,i) => d.prize = rest[i]);
+  o.chests.filter(d => d !== c).forEach((d,i) => d.prize = o.legend ? 0 : rest[i]);
   o.picked = true; o.pickT = 0;
   const q = chestScreen(c);
   if (k === -1){
@@ -447,6 +596,33 @@ function drawWet(){
   ctx.fillText('ツルツル', SX(HALF, wet.s) + 8, y);
 }
 
+function drawWind(){
+  if (hap !== 'wind') return;
+  ctx.fillStyle = 'rgba(255,246,230,.22)';
+  for (let i=0;i<7;i++){
+    const s0 = ((T*260 + i*137) % (L + 200)) - 100, x0 = -HALF + 30 + (i*53) % (HALF*2 - 60);
+    quad(x0, s0, x0 + 6, s0 + 70); ctx.fill();
+  }
+}
+function drawCat(){
+  if (!cat) return;
+  const p = P(cat.s), x = SX(cat.x, cat.s), y = SY(cat.s) - cat.fly*260*p, k = p*1.1;
+  ctx.save(); ctx.translate(x, y); ctx.scale(k * cat.dir, k); ctx.globalAlpha = Math.max(0, 1 - cat.fly*1.5);
+  if (cat.hit) ctx.rotate(cat.fly*8);
+  const step = cat.hit ? 0 : Math.sin(T*12)*4;
+  ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.beginPath(); ctx.ellipse(0,0,26,5,0,0,7); ctx.fill();
+  ctx.fillStyle = '#16121a';
+  ctx.beginPath(); ctx.ellipse(0,-20,22,13,0,0,7); ctx.fill();                 // 体
+  ctx.fillRect(-16,-12,5,12+step); ctx.fillRect(10,-12,5,12-step);              // 足
+  ctx.beginPath(); ctx.arc(22,-30,11,0,7); ctx.fill();                          // 頭
+  ctx.beginPath(); ctx.moveTo(14,-37); ctx.lineTo(16,-50); ctx.lineTo(22,-40); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(24,-40); ctx.lineTo(30,-50); ctx.lineTo(32,-36); ctx.fill();
+  ctx.strokeStyle = '#16121a'; ctx.lineWidth = 4; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(-20,-22); ctx.quadraticCurveTo(-40,-30,-34,-52 + Math.sin(T*5)*4); ctx.stroke(); ctx.lineCap = 'butt';
+  ctx.fillStyle = '#ffd23f'; ctx.beginPath(); ctx.ellipse(20,-31,2.4,3.4,0,0,7); ctx.ellipse(27,-31,2.4,3.4,0,0,7); ctx.fill();
+  ctx.restore();
+}
+
 /* ===== 描画：ジョッキ・お化け・店主・宝箱 ===== */
 function drawJug(x, by, k, slosh){
   ctx.save(); ctx.translate(x, by); ctx.scale(k, k);
@@ -467,8 +643,8 @@ function drawGhost(){
   if (!ghost) return;
   const p = P(ghost.s), x = SX(ghostX(), ghost.s), y = SY(ghost.s) - 70*p + Math.sin(T*3)*6*p;
   ctx.save(); ctx.translate(x, y); ctx.scale(p*1.3, p*1.3); ctx.globalAlpha = ghost.hit ? .35 : .92;
-  ctx.fillStyle = 'rgba(220,214,255,.18)'; ctx.beginPath(); ctx.arc(0,-6,44,0,7); ctx.fill();
-  ctx.fillStyle = '#f0ecff';
+  ctx.fillStyle = ghost.gold ? 'rgba(255,210,63,.3)' : 'rgba(220,214,255,.18)'; ctx.beginPath(); ctx.arc(0,-6,44,0,7); ctx.fill();
+  ctx.fillStyle = ghost.gold ? '#ffd23f' : '#f0ecff';
   ctx.beginPath(); ctx.arc(0,-10,26,Math.PI,0); ctx.lineTo(26,20);
   for (let i=0;i<4;i++){ const xx = 26 - (i+1)*13; ctx.quadraticCurveTo(xx+6.5, 20 + (i%2?-8:8) + Math.sin(T*8+i)*3, xx, 20); }
   ctx.closePath(); ctx.fill();
@@ -528,6 +704,7 @@ function drawOwner(){
   if (o.t > 0.6 && !endShown()){
     const msg = o.repeat ? '今日の宝箱は開けたで!! また明日な!!'
       : o.picked ? (o.lost ? '空っぽやったか!! もう一回挑戦や!!' : 'まいど!! 店員に見せてや!!')
+      : o.legend ? '伝説や!! 金の宝箱、どれでも特典1や!!'
       : (o.empty === 0 ? 'ようやった!! 全部当たりや!! 1個選び!!' : `空っぽが${o.empty}個まざっとるで!! 1個選び!!`);
     const size = Math.min(20, (W-60)/msg.length*1.05);
     ctx.font = FONT(size); const tw = ctx.measureText(msg).width;
@@ -540,17 +717,19 @@ function drawOwner(){
 function drawChest(c, idx){
   const q = chestScreen(c), o = owner;
   ctx.save(); ctx.translate(q.x, q.y + ((!o.picked && o.t > 2.2) ? Math.sin(T*5+idx)*3 : 0)); ctx.scale(q.k, q.k);
+  const lg = o.legend;
+  if (lg && c.open === 0){ ctx.fillStyle = `rgba(255,220,90,${.22 + .1*Math.sin(T*6+idx)})`; ctx.beginPath(); ctx.arc(0,-40,70,0,7); ctx.fill(); }
   if (c.open > 0 && c.chosen && c.prize !== -1){
     ctx.fillStyle = `rgba(255,220,90,${.35*c.open})`;
     for (let i=0;i<7;i++){ ctx.save(); ctx.rotate(-Math.PI/2 + (i-3)*0.28); ctx.fillRect(40, -6, 220*c.open, 12); ctx.restore(); }
   }
   ctx.globalAlpha = (o.picked && !c.chosen) ? .6 : 1;
   ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.ellipse(0,0,50,9,0,0,7); ctx.fill();
-  ctx.fillStyle = '#7a4318'; ctx.beginPath(); ctx.roundRect(-44,-50,88,50,6); ctx.fill();
-  ctx.fillStyle = '#c9a03a'; ctx.fillRect(-44,-50,88,6); ctx.fillRect(-30,-50,8,50); ctx.fillRect(22,-50,8,50);
+  ctx.fillStyle = lg ? '#c9962a' : '#7a4318'; ctx.beginPath(); ctx.roundRect(-44,-50,88,50,6); ctx.fill();
+  ctx.fillStyle = lg ? '#fff1a8' : '#c9a03a'; ctx.fillRect(-44,-50,88,6); ctx.fillRect(-30,-50,8,50); ctx.fillRect(22,-50,8,50);
   ctx.save(); ctx.translate(0,-50); ctx.scale(1, 1 - c.open*1.6);
-  ctx.fillStyle = '#8a4f20'; ctx.beginPath(); ctx.moveTo(-46,0); ctx.lineTo(46,0); ctx.quadraticCurveTo(46,-34,0,-36); ctx.quadraticCurveTo(-46,-34,-46,0); ctx.fill();
-  ctx.fillStyle = '#c9a03a'; ctx.fillRect(-30,-30,8,30); ctx.fillRect(22,-30,8,30);
+  ctx.fillStyle = lg ? '#e8c24a' : '#8a4f20'; ctx.beginPath(); ctx.moveTo(-46,0); ctx.lineTo(46,0); ctx.quadraticCurveTo(46,-34,0,-36); ctx.quadraticCurveTo(-46,-34,-46,0); ctx.fill();
+  ctx.fillStyle = lg ? '#fff1a8' : '#c9a03a'; ctx.fillRect(-30,-30,8,30); ctx.fillRect(22,-30,8,30);
   ctx.restore();
   if (c.open < .2){ ctx.fillStyle = '#ffd23f'; ctx.beginPath(); ctx.roundRect(-8,-44,16,16,3); ctx.fill(); ctx.fillStyle = '#2a1000'; ctx.fillRect(-2,-39,4,7); }
   if (c.open > .5 && c.prize !== null){
@@ -573,14 +752,20 @@ function drawHUD(){
   results.forEach((p,i) => { ctx.font = FONT(15); ctx.fillStyle = p >= 100 ? '#ffd23f' : p ? '#fff6e6' : '#e6392b'; ctx.fillText(p ? `${p}` : '×', 18 + i*38, 56); });
   ctx.textAlign = 'right'; ctx.font = FONT(30); ctx.fillStyle = '#fff6e6';
   ctx.strokeText(`${total}点`, W-16, 38); ctx.fillText(`${total}点`, W-16, 38);
+  if (combo > 0 && throwNo <= CONFIG.throws && phase !== 'judge'){
+    ctx.font = FONT(18); ctx.fillStyle = '#ff8a1c';
+    const cm = combo >= 2 ? `${combo}連続中!! 次ぴったりで×${combo+1}` : `次ぴったりで×${combo+1}!!`;
+    ctx.strokeText(cm, W-16, 62); ctx.fillText(cm, W-16, 62);
+  }
   if (phase === 'aim'){
     ctx.globalAlpha = .6 + .4*Math.sin(T*6);
     ctx.textAlign = 'center'; ctx.font = FONT(24); ctx.fillStyle = '#fff6e6';
     ctx.strokeText('👆 上にシュッとはじけ!!', W/2, H - 60); ctx.fillText('👆 上にシュッとはじけ!!', W/2, H - 60);
     ctx.globalAlpha = 1;
-    if (throwNo >= 2){
-      ctx.font = FONT(15); ctx.fillStyle = '#ffb38a';
-      const m = throwNo === 3 ? 'ラスト!! お化けも速いぞ' : 'お化けに当たると急ブレーキ!! よけて投げろ';
+    const HAP = { wind:'追い風!! いつもよりよくすべるぞ', cat:'黒猫が横切る!! 当たるとどつかれて加速', gold:`金のお化け!! 当てると+${CONFIG.goldBonus}点・止まらない` };
+    if (hap || throwNo >= 2){
+      ctx.font = FONT(15); ctx.fillStyle = hap ? '#ffd23f' : '#ffb38a';
+      const m = hap ? HAP[hap] : throwNo === 3 ? 'ラスト!! お化けも速いぞ' : 'お化けに当たると急ブレーキ!! よけて投げろ';
       ctx.strokeText(m, W/2, H - 30); ctx.fillText(m, W/2, H - 30);
     }
     ctx.strokeStyle = 'rgba(255,246,230,.55)'; ctx.lineWidth = 4; ctx.setLineDash([10,10]);
@@ -596,8 +781,9 @@ function draw(){
   if (state === 'owner') drawOwner();
   drawCounter();
   if (state === 'play'){
-    drawWet(); drawTarget();
-    const ghostBehind = ghost && ghost.s > jug.s;
+    drawWet(); drawWind(); drawTarget();
+    const ghostBehind = ghost && ghost.s > jug.s, catBehind = cat && cat.s > jug.s;
+    if (catBehind) drawCat();
     if (ghostBehind) drawGhost();
     if (jug.drop < 9999){
       const p = P(jug.s);
@@ -606,6 +792,7 @@ function draw(){
       if (jug.drop > 0) ctx.restore();
     }
     if (ghost && !ghostBehind) drawGhost();
+    if (cat && !catBehind) drawCat();
   } else if (state === 'owner'){
     [...owner.chests].map((c,i)=>[c,i]).sort((a,b) => b[0].s - a[0].s).forEach(([c,i]) => drawChest(c,i));
     if (!owner.picked && !owner.repeat && owner.t > 2.2){
