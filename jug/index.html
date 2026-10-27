@@ -50,7 +50,7 @@
   #lose > *{pointer-events:auto}
   .emptybox{background:rgba(26,13,8,.86);border:3px solid #8a7a6a;border-radius:14px;padding:12px 22px;max-width:min(560px,100%);box-sizing:border-box}
   .emptybox h3{margin:0;font-weight:normal;font-size:clamp(26px,8vw,44px);color:#d8cfc4}
-  .emptybox .msg{font-family:"Hiragino Sans",sans-serif;font-weight:700;font-size:clamp(13px,3.6vw,18px);margin-top:4px;color:var(--gold)}
+  .emptybox .msg{white-space:pre-line;font-family:"Hiragino Sans",sans-serif;font-weight:700;font-size:clamp(13px,3.6vw,18px);margin-top:4px;color:var(--gold)}
   .best{font-family:"Hiragino Sans",sans-serif;font-weight:700;font-size:clamp(13px,3.6vw,18px);color:var(--gold)}
   .link{font:inherit;font-size:clamp(14px,3.8vw,20px);background:none;border:0;color:var(--cream);text-decoration:underline;text-underline-offset:4px;cursor:pointer;padding:6px 10px}
   .link:focus-visible{outline:3px solid var(--cream);outline-offset:2px}
@@ -69,6 +69,17 @@
   .tl li.on .ic{background:var(--gold);color:#2a1000}
   .tl b{display:block;font-weight:normal;font-size:clamp(15px,4.2vw,20px)}
   .tl small{display:block;font-family:"Hiragino Sans",sans-serif;font-weight:700;font-size:clamp(11px,3.2vw,14px);color:#c4a98f}
+  .coupon{position:relative}
+  .stamp{position:absolute;right:-8px;top:-18px;transform:rotate(12deg);border:4px solid var(--red);color:var(--red);
+    border-radius:10px;padding:2px 10px;font-size:clamp(18px,5vw,28px);line-height:1.15;background:#fff6e6;text-align:center;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+  .stamp small{display:block;font-family:"Hiragino Sans",sans-serif;font-weight:700;font-size:.42em}
+  .btn.use{animation:none;background:var(--gold);box-shadow:0 8px 0 #9c7a00;font-size:clamp(20px,5.5vw,30px)}
+  .btn.use:active{box-shadow:0 2px 0 #9c7a00}
+  .confirm{margin-top:10px;background:var(--cream);color:#2a1000;border-radius:14px;padding:12px 16px;border:3px solid var(--gold);max-width:min(560px,100%);box-sizing:border-box}
+  .confirm p{margin:0 0 8px;font-family:"Hiragino Sans",sans-serif;font-weight:700;font-size:clamp(13px,3.6vw,17px);line-height:1.5}
+  .confirm .row{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
+  .confirm .btn{margin-top:0}
+  .confirm .link{color:#5a3a20}
   .btn.sub{animation:none;background:#7a4a2a;color:var(--cream);box-shadow:0 8px 0 #3a1a08;font-size:clamp(20px,5.5vw,32px)}
 </style>
 </head>
@@ -91,12 +102,18 @@
       <h3>Tooosu ハロウィン特典</h3>
       <div class="body" id="cpBody"></div>
       <div class="meta" id="cpMeta"></div>
-      <div class="again" id="cpAgain" hidden>※今日の宝箱は開封ずみ。もう一度表示しています</div>
+      <div class="again" id="cpAgain" hidden></div>
+      <div class="stamp" id="cpStamp" hidden></div>
     </div>
-    <div class="show">この画面を店員さんに見せてね</div>
+    <div class="show" id="cpShow">ハイスコアで引き直しOK。使うときは店員さんに見せてね</div>
+    <div class="confirm" id="useConfirm" hidden>
+      <p>店員さんが押してください。<br>使用済みにすると、今日はもう引き直せません</p>
+      <div class="row"><button class="btn use" id="useYes">使用済みにする</button><button class="link" id="useNo">やめる</button></div>
+    </div>
     <div class="newt" id="newWin"></div>
   </div>
   <div class="bottom">
+    <button class="btn use" id="useBtn">店員さんに見せて使う</button>
     <button class="btn sub" id="againBtn">もう一回あそぶ</button>
     <button class="link" id="titlesBtn2">称号コレクション</button>
   </div>
@@ -110,6 +127,7 @@
   </div>
   <div class="bottom">
     <button class="btn" id="retryBtn">もう一回挑戦!!</button>
+    <button class="link" id="keepBtn" hidden>今の特典を見る</button>
     <button class="link" id="titlesBtn3">称号コレクション</button>
   </div>
 </div>
@@ -422,7 +440,9 @@ function startOwner(){
   state = 'owner';
   const saved = loadToday();
   const legend = combo >= CONFIG.throws;   // 全部ぴったり
-  owner = { t:0, picked:false, pickT:0, lost:false, legend, empty: legend ? 0 : emptyCount(total), repeat: saved,
+  // 今日の特典：使用済みなら引けない／その点数を超えていなければ引き直せない
+  const repeat = saved ? (saved.used ? 'used' : (total > saved.score ? null : 'hold')) : null;
+  owner = { t:0, picked:false, pickT:0, lost:false, legend, empty: legend ? 0 : emptyCount(total), repeat, prev: saved,
     chests: [-118, 0, 118].map((x,i) => ({ x, s: L + 40, ts: 110, open:0, prize:null, chosen:false, delay: 0.9 + i*0.25 })) };
   // 自己ベスト・称号
   stats.plays++;
@@ -434,7 +454,7 @@ function startOwner(){
   const note = (newBest ? `自己ベスト更新!! ${total}点` : `自己ベスト ${stats.best}点`) + (newTitles.length ? `<br>称号ゲット：${newTitles.join('・')}` : '');
   $('newWin').innerHTML = note; $('newLose').innerHTML = note;
   refreshBest();
-  if (saved) fillCoupon(saved, true);
+  if (repeat) fillCoupon(saved, repeat);
 }
 function updateOwner(dt){
   const o = owner; o.t += dt;
@@ -476,22 +496,51 @@ function pickChest(x, y){
     o.lost = true; hitstop = .08; shake = 6;
     burst(q.x, q.y - 40, '#8a7a6a', 26, 220);
     const next = CONFIG.emptyChests.filter(t => t.min > total).sort((a,b) => a.min - b.min)[0];
-    $('loseMsg').textContent = `${total}点・${rankOf(total)}` + (next ? `　あと${next.min - total}点で空っぽが${e - next.empty}個へるぜ!!` : '');
+    $('loseMsg').textContent = `${total}点・${rankOf(total)}` + (next ? `　あと${next.min - total}点で空っぽが${e - next.empty}個へるぜ!!` : '')
+      + (o.prev ? `\n前の特典（${CONFIG.prizes[o.prev.prize].name}）はそのまま使えるぜ` : '');
+    $('keepBtn').hidden = !o.prev;
+    if (o.prev) fillCoupon(o.prev, 'hold');
     return;
   }
   hitstop = .12; shake = 10;
   burst(q.x, q.y - 40, '#ffd23f', 50, 420);
   const day = businessDay();
-  const rec = { day: day.key, prize: k, score: total, code: `${day.mmdd}-${Math.floor(1000+Math.random()*9000)}` };
+  const rec = { day: day.key, prize: k, score: total, code: `${day.mmdd}-${Math.floor(1000+Math.random()*9000)}`, used:false };
   saveToday(rec);
-  fillCoupon(rec, false);
+  fillCoupon(rec, o.prev ? 'redraw' : 'new');
 }
-function fillCoupon(rec, isRepeat){
+// mode: new=初めて当たり／redraw=引き直しで入れかわり／hold=今日の特典を表示／used=使用済み
+function fillCoupon(rec, mode){
   const p = CONFIG.prizes[rec.prize];
   $('cpBody').textContent = p.name;
-  $('cpMeta').textContent = `${rec.score}点・${rankOf(rec.score)}　No. ${rec.code}　本日かぎり・お一人様1回` + (p.note ? `／${p.note}` : '');
-  $('cpAgain').hidden = !isRepeat;
+  $('cpMeta').textContent = `${rec.score}点・${rankOf(rec.score)}　No. ${rec.code}　本日かぎり・お一人様1日1回` + (p.note ? `／${p.note}` : '');
+  const again = {
+    redraw: '引き直し成功!! 特典が入れかわったぜ',
+    hold: `※今日の特典です。${rec.score}点をこえたら引き直せます`,
+    used: '※今日の特典は使用済み。また明日!!',
+  }[mode];
+  $('cpAgain').textContent = again || ''; $('cpAgain').hidden = !again;
+  const used = !!rec.used;
+  $('cpStamp').hidden = !used;
+  if (used){
+    const t = new Date(rec.usedAt || Date.now());
+    $('cpStamp').innerHTML = `使用済み<small>${t.getMonth()+1}/${t.getDate()} ${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}</small>`;
+  }
+  $('useBtn').hidden = used;
+  $('useConfirm').hidden = true;
+  $('cpShow').textContent = used ? 'また明日、挑戦しに来てね' : 'ハイスコアで引き直しOK。使うときは店員さんに見せてね';
 }
+// 使用済みにする（店員さんが押す）
+$('useBtn').addEventListener('pointerdown', e => { e.stopPropagation(); $('useConfirm').hidden = false; $('useBtn').hidden = true; });
+$('useNo').addEventListener('pointerdown', e => { e.stopPropagation(); $('useConfirm').hidden = true; $('useBtn').hidden = false; });
+$('useYes').addEventListener('pointerdown', e => {
+  e.stopPropagation();
+  const rec = loadToday(); if (!rec) return;
+  rec.used = true; rec.usedAt = Date.now(); saveToday(rec);
+  fillCoupon(rec, 'used');
+  burst(W/2, H*0.3, '#e6392b', 30, 300);
+});
+$('keepBtn').addEventListener('pointerdown', e => { e.stopPropagation(); const rec = loadToday(); if (rec){ fillCoupon(rec, rec.used ? 'used' : 'hold'); show('result'); } });
 
 /* ===== 描画：お店 ===== */
 function drawRoom(){
@@ -702,8 +751,10 @@ function drawOwner(){
   ctx.restore();
   // ふきだし（結果が出るまで）
   if (o.t > 0.6 && !endShown()){
-    const msg = o.repeat ? '今日の宝箱は開けたで!! また明日な!!'
-      : o.picked ? (o.lost ? '空っぽやったか!! もう一回挑戦や!!' : 'まいど!! 店員に見せてや!!')
+    const msg = o.repeat === 'used' ? '今日の特典は使ったで!! また明日な!!'
+      : o.repeat === 'hold' ? `今日は${o.prev.score}点で開けたで!! こえたら引き直しや!!`
+      : o.picked ? (o.lost ? '空っぽやったか!! もう一回挑戦や!!' : (o.prev ? '引き直し成功や!! 店員に見せてや!!' : 'まいど!! 店員に見せてや!!'))
+      : (o.prev && !o.legend) ? (o.empty === 0 ? 'ハイスコアや!! 引き直し、全部当たりや!!' : `ハイスコアや!! 引き直しや!! 空っぽ${o.empty}個入りや`)
       : o.legend ? '伝説や!! 金の宝箱、どれでも特典1や!!'
       : (o.empty === 0 ? 'ようやった!! 全部当たりや!! 1個選び!!' : `空っぽが${o.empty}個まざっとるで!! 1個選び!!`);
     const size = Math.min(20, (W-60)/msg.length*1.05);
