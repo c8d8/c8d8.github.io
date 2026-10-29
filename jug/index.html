@@ -80,11 +80,14 @@
   .confirm .row{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
   .confirm .btn{margin-top:0}
   .confirm .link{color:#5a3a20}
+  #rotate{display:none;position:fixed;inset:0;z-index:20;background:#1a0d08;color:var(--gold);font-size:clamp(20px,5vw,32px);align-items:center;justify-content:center;text-align:center}
+  @media (orientation: landscape) and (max-height: 500px){ #rotate{display:flex} }
   .btn.sub{animation:none;background:#7a4a2a;color:var(--cream);box-shadow:0 8px 0 #3a1a08;font-size:clamp(20px,5.5vw,32px)}
 </style>
 </head>
 <body>
 <canvas id="c"></canvas>
+<div id="rotate">スマホを縦にしてね</div>
 
 <div class="screen shade on" id="title">
   <div class="kicker">Tooosu ハロウィン限定</div>
@@ -231,7 +234,8 @@ addEventListener('resize', resize); resize();
 
 const $ = id => document.getElementById(id);
 function show(id){ ['title','result','lose','titles'].forEach(s => $(s).classList.toggle('on', s===id)); }
-const endShown = () => $('result').classList.contains('on') || $('lose').classList.contains('on');
+// 結果・空っぽ・称号のどれかが出ていれば「終わりの画面を表示中」（称号を開いても結果画面に戻されないように）
+const endShown = () => ['result','lose','titles'].some(id => $(id).classList.contains('on'));
 const rand = (a,b) => a + Math.random()*(b-a);
 const FONT = s => `${s}px "Dela Gothic One","Hiragino Sans",sans-serif`;
 const easeOut = x => 1 - Math.pow(1-x, 3);
