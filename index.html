@@ -93,6 +93,37 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 .rail p{font-size:12px;color:var(--mute)}
 .note{font-size:11px;color:var(--mute);padding-top:14px;padding-bottom:30px}
 
+/* FOR SALE */
+.sale{background:#E6DFD3;padding-bottom:90px}
+.sale .sh{border-color:var(--rule)}
+.sale-lead{display:grid;gap:14px 40px;padding-top:34px;padding-bottom:10px}
+@media(min-width:900px){.sale-lead{grid-template-columns:1.2fr 1fr;align-items:center}}
+.sale-lead .msg{font-family:"Shippori Mincho B1",serif;font-weight:700;font-size:clamp(17px,2.4vw,24px);line-height:1.75}
+.sale-lead .msg span{display:inline-block}
+.sale-lead .msg u{text-decoration:none;background:linear-gradient(transparent 62%,rgba(184,135,59,.35) 62%)}
+.tel{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;background:var(--ink);color:var(--paper);padding:18px 22px}
+.tel small{font-size:11px;letter-spacing:.2em;color:#A49A8D;width:100%}
+.tel a{font-family:"Syne",sans-serif;font-weight:800;font-size:clamp(24px,6.6vw,34px);letter-spacing:0;line-height:1.1;white-space:nowrap}
+.tel span{font-size:12px;color:#D9CDB8}
+.cards{display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));padding-top:34px}
+.card{background:var(--paper);display:flex;flex-direction:column}
+.card .media{aspect-ratio:16/10}
+.card .media video{object-fit:contain;background:#0c0b0a}
+.card .body{padding:20px 20px 22px;display:flex;flex-direction:column;flex:1}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags b{font-size:11px;font-weight:700;letter-spacing:.08em;padding:2px 9px;border:1px solid var(--ink)}
+.tags b.k{background:var(--ink);color:var(--paper)}
+.tags b.g{border-color:var(--gold);color:#8a6222}
+.card h3{font-family:"Shippori Mincho B1",serif;font-weight:700;font-size:21px;line-height:1.45;margin-top:12px}
+.price{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:40px;line-height:1.1;margin:8px 0 2px;color:var(--ink)}
+.price small{font-size:16px;font-weight:700;margin-left:2px}
+.price i{font-style:normal;font-family:"Zen Kaku Gothic New",sans-serif;font-size:12px;font-weight:500;color:var(--mute);margin-left:10px}
+.card .pt{font-size:13px;color:var(--ink);margin-top:8px;line-height:1.75}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);font-size:12.5px;line-height:1.6}
+.card dt{color:var(--mute);white-space:nowrap}
+.card .split{margin-top:12px;font-size:12.5px;background:rgba(184,135,59,.12);padding:8px 12px;line-height:1.7}
+.sale .note{padding-top:22px;padding-bottom:0;line-height:1.8}
+
 /* PROCESS */
 .dark{background:var(--ink);color:var(--paper)}
 .dark .sh{border-color:rgba(239,234,225,.15)}
@@ -129,7 +160,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;paddin
   <video autoplay muted loop playsinline preload="auto" poster="media/hero.jpg"><source src="media/hero.mp4?v=2" type="video/mp4"></video>
   <div class="nav pad">
     <img src="media/logo_light.png" alt="Cre8ive Dedic8ion">
-    <a href="#contact">CONTACT</a>
+    <div style="display:flex;gap:22px"><a href="#forsale">FOR SALE</a><a href="#contact">CONTACT</a></div>
   </div>
   <div class="in pad">
     <div class="kicker">REAL ESTATE PR FILMS</div>
@@ -212,6 +243,111 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;paddin
     <article><div class="media t" data-yt="QKzRPPq8MH0"><img src="https://i.ytimg.com/vi/QKzRPPq8MH0/hqdefault.jpg" alt="古家付き土地の動画の説明" loading="lazy"><span class="pl"><b></b>PLAY</span></div><h4>古家付き土地の動画、こう作ります</h4><p>不動産会社さま向けのご説明|80秒</p></article>
   </div>
   <p class="note pad">※「実物件」は実際の物件の制作事例です(価格・情報は制作時点のもの)。「見本」は架空の物件・会社で作ったサンプルです。CG・AIによるイメージを含みます。</p>
+</section>
+
+<section class="sale" id="forsale">
+  <div class="sh pad">
+    <div class="no">( FOR SALE — 株式会社ワイズホーム )</div>
+    <h2>For Sale<em>.</em></h2>
+    <p>ワイズホーム(一宮市)が仲介している物件です。ここに載っている動画も、はちが制作しました。</p>
+  </div>
+  <div class="sale-lead pad">
+    <p class="msg">不動産会社さまへ。<br><span>合うお客さまがいらっしゃれば、</span><u><span>分かれでも</span><span>ぜひご紹介ください。</span></u><br><span>販売図面・動画のURLも、</span><span>すぐにお送りします。</span></p>
+    <div class="tel"><small>お問い合わせ・ご紹介</small><a href="tel:0586710800">0586-71-0800</a><span>株式会社ワイズホーム<br>担当 山田</span></div>
+  </div>
+
+  <div class="cards pad">
+
+    <article class="card">
+      <div class="media" data-video="media/asai.mp4"><img src="media/asai.jpg" alt="一宮市浅井町大日比野の売り土地(現況)" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+      <div class="body">
+        <div class="tags"><b class="k">売り土地</b><b class="g">価格変更</b><b>線引き前宅地</b></div>
+        <h3>一宮市浅井町大日比野</h3>
+        <div class="price">980<small>万円</small><i>坪単価 約15.8万円</i></div>
+        <p class="pt">約62坪で、東と西の2方向が公道。線引き前の宅地なので、どなたでも建築できます。</p>
+        <dl>
+          <dt>土地</dt><dd>公簿 204.87㎡(約61.97坪)</dd>
+          <dt>交通</dt><dd>名鉄バス「島村口」停 約250m</dd>
+          <dt>都市計画</dt><dd>市街化調整区域(建ぺい率60%・容積率200%)</dd>
+          <dt>道路</dt><dd>東側・西側 幅員約4.5mの公道</dd>
+          <dt>引渡し</dt><dd>古家解体・確定測量のうえ更地渡し</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="media" data-video="media/suehiro.mp4"><img src="media/suehiro.jpg" alt="一宮市末広1丁目の売り地(現況)" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+      <div class="body">
+        <div class="tags"><b class="k">売り地</b><b class="g">価格変更</b><b>建築条件なし</b></div>
+        <h3>一宮市末広1丁目</h3>
+        <div class="price">1,200<small>万円</small><i>坪単価 約51.2万円</i></div>
+        <p class="pt">一宮駅まで約1.2kmのまちなか。3階建て・車2台の参考プランを動画でご覧いただけます。</p>
+        <dl>
+          <dt>土地</dt><dd>公簿 77.55㎡(約23.45坪)</dd>
+          <dt>交通</dt><dd>名鉄・JR「一宮総合駅」約1.2km</dd>
+          <dt>都市計画</dt><dd>市街化区域・準工業地域(建ぺい率60%・容積率200%)</dd>
+          <dt>道路</dt><dd>東側 幅員約6.0mの公道に約6.1m接道</dd>
+          <dt>引渡し</dt><dd>現況店舗を解体・確定測量のうえ更地渡し</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="media" data-video="media/konan.mp4?v=2"><img src="media/konan_poster.jpg" alt="江南市北山町東の売り地" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+      <div class="body">
+        <div class="tags"><b class="k">売り地</b><b>分筆相談可</b><b>角地</b></div>
+        <h3>江南市北山町東</h3>
+        <div class="price">1,544<small>万円</small><i>坪単価 約10.5万円</i></div>
+        <p class="pt">約147坪の角地で、南は約12mの道路。資材置き場・駐車場などのご相談にも。</p>
+        <div class="split">分けての購入もできます:A区画 約73.5坪 882万円/B区画 約73.5坪 662万円</div>
+        <dl>
+          <dt>土地</dt><dd>公簿 486㎡(約147.01坪)・雑種地</dd>
+          <dt>交通</dt><dd>名鉄犬山線「布袋」駅 約730m</dd>
+          <dt>都市計画</dt><dd>市街化調整区域(建物の建築には許可が必要)</dd>
+          <dt>道路</dt><dd>南側 約12.0m/西側 約6.0m(A区画のみ)の公道</dd>
+          <dt>現況</dt><dd>更地</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="media" data-video="media/yamato.mp4"><img src="media/yamato.jpg" alt="一宮市大和町妙興寺の売り店舗" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+      <div class="body">
+        <div class="tags"><b class="k">売り店舗</b><b>駐車15台</b><b>3方向道路</b></div>
+        <h3>一宮市大和町妙興寺</h3>
+        <div class="price">5,300<small>万円</small></div>
+        <p class="pt">妙興寺駅まで約550m。西は県道一宮蟹江線に面した、約160坪の店舗。飲食店のほか、いろいろな使い方を動画でご提案しています。</p>
+        <dl>
+          <dt>土地</dt><dd>公簿 529.75㎡(約160.24坪)</dd>
+          <dt>建物</dt><dd>鉄骨造3階建て 310.82㎡(約94.02坪)※固定資産台帳記載</dd>
+          <dt>交通</dt><dd>名鉄名古屋本線「妙興寺」駅 約550m</dd>
+          <dt>都市計画</dt><dd>市街化区域・第二種住居地域(建ぺい率60%・容積率200%)</dd>
+          <dt>築年</dt><dd>昭和55年築・昭和63年増築</dd>
+          <dt>引渡し</dt><dd>相談(年明け以降)</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="media" data-video="media/meichi.mp4?v=2"><img src="media/meichi.jpg" alt="一宮市明地の売り戸建て" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+      <div class="body">
+        <div class="tags"><b class="k">中古戸建て</b><b>鉄筋コンクリート造</b><b>空き家</b></div>
+        <h3>一宮市明地(萩原駅エリア)</h3>
+        <div class="price">1,230<small>万円</small></div>
+        <p class="pt">土地約62坪・建物約49坪の、鉄筋コンクリート造2階建て。空き家なので、すぐにご案内できます。</p>
+        <dl>
+          <dt>土地</dt><dd>公簿 204.01㎡(約61.71坪)</dd>
+          <dt>建物</dt><dd>鉄筋コンクリート造 2階建て 162.58㎡(約49.18坪)</dd>
+          <dt>交通</dt><dd>名鉄尾西線「萩原」駅 約2.5km</dd>
+          <dt>都市計画</dt><dd>市街化調整区域(旧既存宅地)</dd>
+          <dt>築年</dt><dd>平成3年5月築</dd>
+          <dt>駐車場</dt><dd>あり</dd>
+        </dl>
+      </div>
+    </article>
+
+  </div>
+  <p class="note pad">※価格・情報は2026年11月時点のものです。予約・成約済みの場合はご了承ください。図面と現況が異なる場合は現況を優先します。購入には別途諸費用がかかります。動画にはCGによるイメージを含みます。<br>取引態様:仲介 / 株式会社ワイズホーム 愛知県知事(4)第21462号 / 一宮市松降1丁目11番16号</p>
 </section>
 
 <section class="dark">
