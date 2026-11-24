@@ -67,6 +67,18 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 .jump a{font-size:14px;font-weight:700;color:var(--ink);border-bottom:1px solid var(--gold);padding-bottom:2px;transition:color .3s}
 .jump a:hover{color:var(--gold)}
 #shorts{scroll-margin-top:16px}
+.other{display:block;max-width:480px;margin-top:24px;background:var(--panel);border:1px solid var(--gold);overflow:hidden}
+.other .th{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;height:112px;background:var(--paper)}
+.other img{display:block;width:100%;height:112px;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.other img:nth-child(2){object-position:50% 28%}
+.other img:nth-child(3){object-position:50% 34%}
+.other .tx{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 16px}
+.other b{display:block;font-size:15px;line-height:1.5;color:var(--ink)}
+.other small{display:block;font-size:12px;line-height:1.5;color:var(--mute)}
+.other i{font-style:normal;color:var(--gold);font-size:20px;line-height:1;transition:transform .3s}
+.other:hover img{transform:scale(1.04)}
+.other:hover i{transform:translateX(4px)}
+.other:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .proj{display:grid;gap:22px;padding-top:56px;padding-bottom:56px;border-bottom:1px solid var(--rule)}
 @media(min-width:900px){.proj{grid-template-columns:1.55fr 1fr;gap:56px;align-items:center}.proj.rev{grid-template-columns:1fr 1.55fr}.proj.rev .media{order:2}}
 .media{position:relative;overflow:hidden;background:#0B111B;cursor:pointer}
@@ -197,7 +209,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;paddin
   <div class="sh pad">
     <div class="no">( SELECTED WORKS )</div>
     <h2>Works<em>.</em></h2>
-    <div><p>実際の物件でつくった事例と、架空の物件でつくった見本です。</p><nav class="jump" aria-label="作品の移動先"><a href="#shorts">縦型動画はこちら</a><a href="produce/">その他の業種の実績はこちら</a></nav></div>
+    <div><p>実際の物件でつくった事例と、架空の物件でつくった見本です。</p><nav class="jump" aria-label="作品の移動先"><a href="#shorts">縦型動画はこちら</a></nav><a class="other" href="produce/"><span class="th"><img src="produce/media/mochi_close.jpg" alt="" loading="lazy"><img src="produce/media/ankoya.jpg" alt="" loading="lazy"><img src="produce/media/frank.jpg" alt="" loading="lazy"></span><span class="tx"><span><b>その他の業種の実績はこちら</b><small>和菓子店や酒場の企画動画</small></span><i aria-hidden="true">→</i></span></a></div>
   </div>
 
   <div class="proj pad">
