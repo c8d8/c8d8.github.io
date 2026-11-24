@@ -63,6 +63,10 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 @media(min-width:900px){.sh{grid-template-columns:1.2fr 1fr;align-items:end}.sh .no{grid-column:1/-1}}
 
 /* WORKS */
+.jump{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:16px}
+.jump a{font-size:14px;font-weight:700;color:var(--ink);border-bottom:1px solid var(--gold);padding-bottom:2px;transition:color .3s}
+.jump a:hover{color:var(--gold)}
+#shorts{scroll-margin-top:16px}
 .proj{display:grid;gap:22px;padding-top:56px;padding-bottom:56px;border-bottom:1px solid var(--rule)}
 @media(min-width:900px){.proj{grid-template-columns:1.55fr 1fr;gap:56px;align-items:center}.proj.rev{grid-template-columns:1fr 1.55fr}.proj.rev .media{order:2}}
 .media{position:relative;overflow:hidden;background:#0B111B;cursor:pointer}
@@ -193,13 +197,55 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;paddin
   <div class="sh pad">
     <div class="no">( SELECTED WORKS )</div>
     <h2>Works<em>.</em></h2>
-    <p>実際の物件でつくった事例と、架空の物件でつくった見本です。</p>
+    <div><p>実際の物件でつくった事例と、架空の物件でつくった見本です。</p><nav class="jump" aria-label="作品の移動先"><a href="#shorts">縦型動画はこちら</a><a href="produce/">その他の業種の実績はこちら</a></nav></div>
+  </div>
+
+  <div class="proj pad">
+    <div class="media w" data-yt="9JLlp0N95Dc"><img src="media/tateuri.jpg" alt="建売分譲 全4棟の完成前動画" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+    <div class="info">
+      <div class="idx">01</div>
+      <div class="cat">READY-BUILT — 見本</div>
+      <h3>上棟前の建売を、図面から。</h3>
+      <p>区画図と間取り図だけで、全4棟の分譲住宅を。空から見る立地、更地から建ち上がる4棟、そこで暮らす家族の一日までを、撮影なしで1本に。</p>
+      <dl><dt>TYPE</dt><dd>建売・分譲住宅(架空の物件)</dd><dt>TIME</dt><dd>45秒・横型</dd></dl>
+    </div>
+  </div>
+
+  <div class="proj rev pad">
+    <div class="media w" data-yt="MqKkbo_AJ30"><img src="media/jigyo.jpg" alt="実在の地図から再現した街に置いた、架空の事業用地" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+    <div class="info">
+      <div class="idx">02</div>
+      <div class="cat">BUSINESS LAND — 見本</div>
+      <h3>事業用地の、使い道まで。</h3>
+      <p>実際の地図から街を立体で再現。倉庫から商業施設への建てかえ、3区画への分け方、ICまでのルートや配送圏までを、撮影なしで1本に。</p>
+      <dl><dt>TYPE</dt><dd>事業用地(架空の用地)</dd><dt>TIME</dt><dd>40秒・横型</dd></dl>
+    </div>
+  </div>
+
+  <div class="proj pad">
+    <div class="media w" data-yt="gl_m-LkQjGg"><img src="https://i.ytimg.com/vi/gl_m-LkQjGg/hqdefault.jpg" alt="新築戸建て" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+    <div class="info">
+      <div class="idx">03</div>
+      <div class="cat">NEW HOUSE — 見本</div>
+      <h3>新築戸建ての、物件紹介。</h3>
+      <p>外観・間取り・暮らしの場面を、物件の魅力が伝わる順番で。</p>
+    </div>
+  </div>
+
+  <div class="proj rev pad">
+    <div class="media w" data-yt="DIGcyqiwoi0"><img src="https://i.ytimg.com/vi/DIGcyqiwoi0/hqdefault.jpg" alt="新築マンション" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
+    <div class="info">
+      <div class="idx">04</div>
+      <div class="cat">CONDOMINIUM — 見本</div>
+      <h3>新築マンションの、物件紹介。</h3>
+      <p>建物の存在感と、部屋からの暮らしのイメージを1本に。</p>
+    </div>
   </div>
 
   <div class="proj pad">
     <div class="media w" data-video="media/konan.mp4?v=2"><img src="media/konan_poster.jpg" alt="江南市の売り土地" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
     <div class="info">
-      <div class="idx">01</div>
+      <div class="idx">05</div>
       <div class="cat">LAND — 実物件</div>
       <h3>更地に、建った姿を。</h3>
       <p>愛知県江南市の売り土地。現況の写真から、2区画それぞれに家が建つまでをCGで。駅までの距離や、資材置き場・店舗としての使い道も。</p>
@@ -210,7 +256,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;paddin
   <div class="proj rev pad">
     <div class="media w" data-video="media/meichi.mp4?v=2"><img src="media/meichi.jpg" alt="一宮市の売り戸建て" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
     <div class="info">
-      <div class="idx">02</div>
+      <div class="idx">06</div>
       <div class="cat">RENOVATION — 実物件</div>
       <h3>古い家の、第二章を。</h3>
       <p>愛知県一宮市の売り戸建て。家財を消したLDK、外壁と壁紙の色違い、家族が暮らすイメージまでをナレーション付きで。</p>
@@ -218,38 +264,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;paddin
     </div>
   </div>
 
-  <div class="proj pad">
-    <div class="media w" data-yt="9JLlp0N95Dc"><img src="media/tateuri.jpg" alt="建売分譲 全4棟の完成前動画" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
-    <div class="info">
-      <div class="idx">03</div>
-      <div class="cat">READY-BUILT — 見本</div>
-      <h3>上棟前の建売を、図面から。</h3>
-      <p>区画図と間取り図だけで、全4棟の分譲住宅を。空から見る立地、更地から建ち上がる4棟、そこで暮らす家族の一日までを、撮影なしで1本に。</p>
-      <dl><dt>TYPE</dt><dd>建売・分譲住宅(架空の物件)</dd><dt>TIME</dt><dd>45秒・横型</dd></dl>
-    </div>
-  </div>
-
-  <div class="proj rev pad">
-    <div class="media w" data-yt="gl_m-LkQjGg"><img src="https://i.ytimg.com/vi/gl_m-LkQjGg/hqdefault.jpg" alt="新築戸建て" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
-    <div class="info">
-      <div class="idx">04</div>
-      <div class="cat">NEW HOUSE — 見本</div>
-      <h3>新築戸建ての、物件紹介。</h3>
-      <p>外観・間取り・暮らしの場面を、物件の魅力が伝わる順番で。</p>
-    </div>
-  </div>
-
-  <div class="proj pad">
-    <div class="media w" data-yt="DIGcyqiwoi0"><img src="https://i.ytimg.com/vi/DIGcyqiwoi0/hqdefault.jpg" alt="新築マンション" loading="lazy"><span class="pl"><b></b>PLAY</span></div>
-    <div class="info">
-      <div class="idx">05</div>
-      <div class="cat">CONDOMINIUM — 見本</div>
-      <h3>新築マンションの、物件紹介。</h3>
-      <p>建物の存在感と、部屋からの暮らしのイメージを1本に。</p>
-    </div>
-  </div>
-
-  <div class="rail-h pad"><h3>Shorts<em>.</em></h3><span>SNS・店頭モニター向けの縦型 →</span></div>
+  <div class="rail-h pad" id="shorts"><h3>Shorts<em>.</em></h3><span>SNS・店頭モニター向けの縦型 →</span></div>
   <div class="rail">
     <article><div class="media t" data-video="media/yakiimo.mp4"><img src="media/yakiimo.jpg" alt="小人の建築現場が焼き芋の釜だった、不動産会社のイメージCM" loading="lazy"><span class="pl"><b></b>PLAY</span></div><h4>あたたかいお家に、帰ろう。</h4><p>不動産会社さまのイメージCM|制作事例</p></article>
     <article><div class="media t" data-yt="GEwckRnYX5U"><img src="https://i.ytimg.com/vi/GEwckRnYX5U/hqdefault.jpg" alt="古家付き土地" loading="lazy"><span class="pl"><b></b>PLAY</span></div><h4>古い家が、30秒で新築に</h4><p>古家付き土地|見本</p></article>
