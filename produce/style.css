@@ -1,0 +1,145 @@
+/* 色や文字の共通設定(トップページと同じ色) */
+:root{--ink:#ECEDEF;--paper:#0D0F12;--gold:#C99A5B;--mute:#A2A9B4;--rule:rgba(236,237,239,.16);--panel:#15181D;--gut:clamp(24px,5vw,72px)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:"Zen Kaku Gothic New",sans-serif;font-size:16px;line-height:1.9;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{display:block;width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:"Zen Old Mincho",serif;font-weight:700;line-height:1.35;letter-spacing:.04em;font-feature-settings:"palt"}
+h2{font-size:clamp(28px,4.2vw,52px)}
+h3{font-size:clamp(22px,2.4vw,30px)}
+.nb{display:inline-block}
+.wrap{padding-left:var(--gut);padding-right:var(--gut);max-width:1440px;margin:0 auto}
+.lead{color:var(--mute);max-width:36em}
+.note{font-size:13px;color:var(--mute)}
+.lead,.sub,.t,.step p,.idea small{word-break:auto-phrase}
+.proof{font-size:14px;color:var(--mute);margin-top:24px}
+
+/* ヘッダー */
+.nav{position:absolute;z-index:3;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:24px var(--gut)}
+.nav img{height:32px;width:auto}
+.nav a.link{font-size:14px;border-bottom:1px solid rgba(236,237,239,.55);padding-bottom:2px}
+
+/* ボタン */
+.btn{display:inline-block;background:var(--gold);color:#16120C;font-weight:700;padding:16px 40px;border-radius:999px;transition:transform .3s cubic-bezier(.22,1,.36,1),background .3s}
+.btn:hover{transform:translateY(-2px);background:#D8AB6E}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+/* 一番上 */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;background:#0B0D10}
+.hero>img{position:absolute;top:0;right:0;width:min(58vw,100svh);height:100%;object-fit:cover;object-position:50% 50%}
+.hero:after{content:"";position:absolute;top:0;bottom:0;right:0;width:min(58vw,100svh);background:linear-gradient(180deg,rgba(11,13,16,.82) 0%,rgba(11,13,16,0) 20%),linear-gradient(90deg,#0B0D10 0%,rgba(11,13,16,.28) 30%,rgba(11,13,16,0) 56%)}
+.hero .in{position:relative;z-index:2;width:100%;padding-top:128px;padding-bottom:clamp(48px,9vh,96px)}
+.hero .who{font-size:14px;color:#D4D8DE;margin-bottom:16px}
+.hero h1{font-size:clamp(38px,6.4vw,92px);line-height:1.25;margin-bottom:24px}
+.hero p.sub{max-width:27em;color:#DDE0E5;margin-bottom:32px}
+
+/* 主役の事例(写真→企画→動画) */
+.feature{padding-top:128px;padding-bottom:128px}
+.feature>header{margin-bottom:64px}
+.feature .shop{color:var(--gold);font-size:15px;margin-bottom:8px}
+.flow{display:grid;gap:48px}
+.flow figure{position:relative}
+.flow figcaption{font-size:13px;color:var(--mute);margin-top:8px}
+.flow .idea{font-family:"Zen Old Mincho",serif;font-weight:700;font-size:clamp(26px,3vw,42px);line-height:1.55;letter-spacing:.04em;font-feature-settings:"palt"}
+.flow .idea small{display:block;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:500;font-size:15px;line-height:1.9;letter-spacing:0;color:var(--mute);margin-top:24px;font-feature-settings:normal}
+.flow .tv{max-width:440px}
+.more{display:inline-block;margin-top:24px;font-size:15px;font-weight:500;font-family:"Zen Kaku Gothic New",sans-serif;letter-spacing:0;background:linear-gradient(var(--gold),var(--gold)) 0 100%/100% 1px no-repeat;padding-bottom:2px;transition:background-size .4s cubic-bezier(.22,1,.36,1)}
+.more:hover{background-size:40% 1px}
+@media(min-width:960px){.flow{grid-template-columns:clamp(220px,22vw,320px) minmax(0,1fr) auto;gap:clamp(40px,4vw,64px);align-items:center}.flow .tv{width:min(calc(86vh*.5625),34vw);max-width:none}}
+
+/* 余白だけの一文 */
+.quiet{padding-top:96px;padding-bottom:96px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.quiet p{font-family:"Zen Old Mincho",serif;font-weight:700;font-size:clamp(24px,3.4vw,42px);line-height:1.6;letter-spacing:.04em;font-feature-settings:"palt"}
+
+/* ほかの事例 */
+.others{padding-top:128px;padding-bottom:128px}
+.others>h2{margin-bottom:64px}
+.case{display:grid;gap:32px;padding:64px 0;border-top:1px solid var(--rule);align-items:center}
+.case:last-of-type{border-bottom:1px solid var(--rule)}
+.case .shop{color:var(--gold);font-size:14px;margin-bottom:8px}
+.case p.t{color:var(--mute);margin-top:16px;max-width:30em}
+.case figcaption{font-size:13px;color:var(--mute);margin-top:8px}
+@media(min-width:900px){.case.pair{grid-template-columns:minmax(0,1fr) 280px minmax(0,1.25fr);gap:48px}.case.small{grid-template-columns:200px minmax(0,1fr);gap:56px}}
+
+/* 建築の事例(色の帯) */
+.band{background:var(--panel)}
+.band-in{display:grid;gap:40px;padding-top:96px;padding-bottom:96px;align-items:center}
+.band .shop{color:var(--gold);font-size:15px;margin-bottom:8px}
+.band h2{font-size:clamp(32px,5vw,68px)}
+.band p.t{color:var(--mute);margin-top:24px;max-width:30em}
+@media(min-width:900px){.band-in{grid-template-columns:minmax(0,1fr) auto;gap:72px}.band .tv{width:min(calc(78vh*.5625),36vw)}}
+
+/* 動画の再生ボタン */
+.vp{position:relative;display:block;cursor:pointer;background:#0B0D10}
+.vp button{position:absolute;inset:0;width:100%;border:0;background:rgba(11,13,16,.12);cursor:pointer;transition:background .3s}
+.vp button:hover{background:rgba(11,13,16,0)}
+.vp button:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
+.vp button:after{content:"";position:absolute;left:50%;top:50%;width:72px;height:72px;margin:-36px 0 0 -36px;border-radius:50%;background:rgba(13,15,18,.72) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23C99A5B' d='M9 6.5v11l9-5.5z'/%3E%3C/svg%3E") center/40px no-repeat;border:1px solid rgba(201,154,91,.75)}
+
+/* 工務店さんへ */
+.next{background:var(--panel);padding-top:120px;padding-bottom:120px}
+.next .grid{display:grid;gap:32px}
+.next ul{list-style:none;border-top:1px solid var(--rule)}
+.next li{padding:16px 0;border-bottom:1px solid var(--rule)}
+@media(min-width:900px){.next .grid{grid-template-columns:1fr 1fr;gap:72px;align-items:start}}
+
+/* 最後のボタン */
+.cta{padding-top:112px;padding-bottom:112px}
+.cta h2{margin-bottom:32px}
+.cta .note{margin-top:16px}
+footer{border-top:1px solid var(--rule);padding-top:32px;padding-bottom:32px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;font-size:13px;color:var(--mute)}
+footer a{border-bottom:1px solid var(--rule)}
+
+/* 事例ページ */
+.ch{padding-top:144px;padding-bottom:64px}
+.ch .shop{color:var(--gold);font-size:15px;margin-bottom:8px}
+.ch h1{font-size:clamp(34px,5.4vw,72px)}
+.ch p{margin-top:24px}
+.step{display:grid;gap:32px;padding-top:64px;padding-bottom:64px;border-top:1px solid var(--rule);align-items:center}
+.step p{color:var(--mute);margin-top:16px;max-width:32em}
+.step .tv{max-width:400px}
+@media(min-width:880px){.step{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px}.step.rev>:first-child{order:2}}
+
+/* ふわっと出る動き */
+.js .fade{opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.js .fade.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .fade{opacity:1;transform:none;transition:none}.btn,.more{transition:none}}
+
+/* 主役の事例:パソコンは動画を見出しの高さから、スマホは動画に餅を重ねる */
+@media(min-width:960px){
+  .feature{display:grid;grid-template-columns:clamp(220px,22vw,320px) minmax(0,1fr) auto;column-gap:clamp(40px,4vw,64px);align-items:start}
+  .feature>header{grid-column:1/3;grid-row:1}
+  .flow{display:contents}
+  .flow>figure:first-child{grid-column:1;grid-row:2}
+  .flow .idea{grid-column:2;grid-row:2}
+  .flow .tv{grid-column:3;grid-row:1/3}
+}
+@media(max-width:959px){
+  .flow{position:relative;display:flex;flex-direction:column;gap:32px}
+  .flow .tv{order:1;max-width:none}
+  .flow .idea{order:2}
+  .flow>figure:first-child{position:absolute;z-index:2;top:12px;left:12px;width:120px;max-width:none;background:var(--paper);padding:4px}
+  .flow>figure:first-child figcaption{font-size:11px;line-height:1.5;margin-top:4px}
+}
+
+/* 事例ページの一番上 */
+.ch{display:grid;gap:40px;align-items:center}
+.ch-media .note{margin-top:8px}
+@media(min-width:880px){.ch{grid-template-columns:minmax(0,1fr) auto;gap:72px}.ch-media{width:min(calc(74vh*.5625),36vw)}}
+
+/* スマホ */
+@media(max-width:640px){
+  .hero{display:block;min-height:0}
+  .hero>img{position:relative;width:100%;height:auto;aspect-ratio:1/.86;object-position:50% 45%}
+  .hero:after{top:0;bottom:auto;left:0;width:100%;height:calc(100vw*.86);background:linear-gradient(0deg,#0B0D10 0%,rgba(11,13,16,0) 28%),linear-gradient(180deg,rgba(11,13,16,.9) 0%,rgba(11,13,16,.55) 18%,rgba(11,13,16,0) 36%)}
+  .hero .in{padding-top:8px;padding-bottom:56px}
+  .feature,.others{padding-top:80px;padding-bottom:80px}
+  .feature>header,.others>h2{margin-bottom:40px}
+  .quiet,.next,.cta{padding-top:72px;padding-bottom:72px}
+  .btn{display:block;text-align:center}
+  .flow .tv,.step .tv{max-width:none}
+  .band-in{padding-top:72px;padding-bottom:72px}
+  .ch{padding-top:112px;padding-bottom:48px}
+  .ch+.step{border-top:0;padding-top:16px}
+}
