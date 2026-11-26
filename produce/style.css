@@ -198,3 +198,15 @@ footer a{border-bottom:1px solid var(--rule)}
   .ch{padding-top:112px;padding-bottom:48px}
   .ch+.step{border-top:0;padding-top:16px}
 }
+
+/* 採用の事例(トップ) */
+.recruit{padding-top:128px;padding-bottom:128px;border-top:1px solid var(--rule)}
+.recruit>header{margin-bottom:56px;max-width:40em}
+.recruit .shop{color:var(--gold);font-size:15px;margin-bottom:8px}
+.recruit .t{margin-top:20px;color:var(--mute)}
+.rc-grid{display:grid;gap:24px}
+.rc-arrow{font-size:32px;color:var(--gold);text-align:center;line-height:1}.rc-d{display:none}
+.recruit .tv{max-width:360px}
+.recruit .tv figcaption{font-size:13px;color:var(--mute);margin-top:8px}
+@media(min-width:1000px){.rc-grid{grid-template-columns:minmax(0,1fr) auto minmax(0,1.1fr) clamp(220px,20vw,300px);gap:28px;align-items:center}.rc-d{display:inline}.rc-m{display:none}.recruit .tv{max-width:none}}
+@media(max-width:640px){.recruit{padding-top:80px;padding-bottom:80px}.recruit>header{margin-bottom:40px}.recruit .tv{max-width:none}}
