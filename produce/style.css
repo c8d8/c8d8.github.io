@@ -85,6 +85,46 @@ h3{font-size:clamp(22px,2.4vw,30px)}
 }
 @media(max-width:640px){.plan3d{padding-top:80px;padding-bottom:80px}.plan3d>header{margin-bottom:40px}.p3-plan{max-width:340px}}
 
+/* 採用ページ: よくある求人と、こうなる */
+.ba{padding-top:96px;padding-bottom:128px;border-top:1px solid var(--rule)}
+.ba>h2{margin-bottom:56px}
+.ba-grid{display:grid;gap:32px}
+.ba-tag{font-size:14px;font-weight:700;margin-bottom:12px;color:var(--mute)}
+.after .ba-tag{color:var(--gold)}
+.job{border-radius:6px;padding:28px 28px 24px}
+.before .job{background:#E9EAEC;color:#3B3F46}
+.after .job{background:#FBF6EE;color:#1E1B16;box-shadow:0 0 0 2px var(--gold)}
+.job-co{font-size:13px;opacity:.75}
+.job h3{font-size:clamp(20px,2.2vw,28px);margin:6px 0 18px}
+.before .job h3{font-family:"Zen Kaku Gothic New",sans-serif}
+.job dl{display:grid;grid-template-columns:4em 1fr;gap:6px 12px;font-size:15px}
+.job dt{font-weight:700}
+.job-pr{margin-top:16px;font-size:15px}
+.qa{list-style:none;display:grid;gap:14px}
+.qa li{font-size:15px;line-height:1.75;padding-left:0}
+.qa span{display:inline-block;font-weight:700;color:#8A5E24;margin-right:8px}
+.qa a{font-size:13px;margin-left:8px;border-bottom:1px solid currentColor;color:#8A5E24}
+.job-cond{margin-top:18px;padding-top:14px;border-top:1px solid rgba(30,27,22,.15);font-size:14px;opacity:.8}
+.ba-why{color:var(--mute);margin-top:16px;font-size:15px;max-width:32em;word-break:auto-phrase}
+@media(min-width:900px){.ba-grid{grid-template-columns:1fr 1fr;gap:48px;align-items:start}}
+
+/* 採用ページ: 3本の動画 */
+.three{padding-top:96px;padding-bottom:128px;border-top:1px solid var(--rule)}
+.three>h2{margin-bottom:56px}
+.three-grid{display:grid;gap:40px}
+.three-grid figure{scroll-margin-top:24px}
+.three-grid figcaption{margin-top:12px;font-family:"Zen Old Mincho",serif;font-weight:700;font-size:19px;line-height:1.5}
+.three-grid figcaption span{display:block;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:500;font-size:13px;color:var(--gold);margin-bottom:4px}
+@media(min-width:760px){.three-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}}
+@media(min-width:760px) and (max-width:1100px){.three-grid figcaption{font-size:16px}}
+
+/* 採用ページ: 進め方 */
+.steps{list-style:none;border-top:1px solid var(--rule)}
+.next .steps li{padding:18px 0 18px 48px;border-bottom:1px solid var(--rule);position:relative;font-weight:700}
+.steps li span{position:absolute;left:0;top:16px;width:32px;height:32px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:14px}
+.steps small{display:block;font-weight:400;font-size:14px;color:var(--mute);margin-top:4px}
+@media(max-width:640px){.ba,.three{padding-top:72px;padding-bottom:80px}.ba>h2,.three>h2{margin-bottom:40px}.job{padding:22px 20px 20px}}
+
 /* 動画の再生ボタン */
 .vp{position:relative;display:block;cursor:pointer;background:#0B0D10}
 .vp button{position:absolute;inset:0;width:100%;border:0;background:rgba(11,13,16,.12);cursor:pointer;transition:background .3s}
